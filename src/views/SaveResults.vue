@@ -93,7 +93,6 @@ main {
     max-height: 200px;
     margin: 10px; /* カード間の余白 */
     font-family: 'M PLUS 1 Code', 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
-    color: ;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease-in-out;
 }
