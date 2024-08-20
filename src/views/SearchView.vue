@@ -58,6 +58,7 @@
 import HeaderView from '@/components/HeaderView.vue';
 import FooterView from '@/components/FooterView.vue';
 import axios from 'axios';
+import { toKana } from 'wanakana'; 
 
 export default {
   name: 'SearchView',
@@ -76,23 +77,27 @@ export default {
 
   created() {
     this.selectedAreas(); // コンポーネントが作成された時にエリアを取得
-    this.fetchCategories(); // コンポーネントが作成された時にカテゴリーを取得
+    this.selectedCategories(); // コンポーネントが作成された時にカテゴリーを取得
   },
   methods: {
 
     selectedAreas() {
       axios.get('https://m3h-ikari-functionapp729.azurewebsites.net/api/GetAreas')
         .then(response => {
-          this.areas = response.data;
-        })
-        .catch(error => {
+          this.areas = response.data.sort((a, b) => {
+          // 漢字をひらがなに変換してから比較
+          const aKana = toKana(a);
+          const bKana = toKana(b);
+          return aKana.localeCompare(bKana, 'ja');
+        });
+      })        .catch(error => {
           console.error('エリアの取得に失敗しました:', error);
         });
     },
-    fetchCategories() {
+    selectedCategories() {
       axios.get('https://m3h-ikari-functionapp729.azurewebsites.net/api/GetCategories')
         .then(response => {
-          this.categories = response.data;
+          this.categories = response.data.sort((a, b) => a.localeCompare(b, 'ja')); // あいうえお順にソート
         })
         .catch(error => {
           console.error('カテゴリーの取得に失敗しました:', error);

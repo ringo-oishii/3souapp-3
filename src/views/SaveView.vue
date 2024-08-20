@@ -1,6 +1,6 @@
 <template>
-  <div id="app">
-    <HeaderView />
+<div id="app" data-app>
+   <HeaderView />
     <main>
 
       <section>
@@ -24,7 +24,7 @@
               </v-col>
               <v-col cols="12" md="4">
                 <v-text-field
-                  label="🍴 Nameを入力…"
+                  label="🍴 お店の名前を入力…"
                   v-model="Name"
                   filled
                   dense
@@ -35,7 +35,7 @@
               <v-col cols="12" md="2"></v-col>
               <v-col cols="12" md="4">
                 <v-text-field
-                  label="📍 areaを入力…"
+                  label="📍 エリアを入力…"
                   v-model="Area"
                   filled
                   dense
@@ -43,13 +43,15 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12" md="4">
-                <v-text-field
-                  label="🏷️ categoryを入力…"
+                <v-combobox
+                  label="🏷️ カテゴリーを選択または入力…"
                   v-model="Category"
+                  :items="categories"
+                  :menu-props="{ top: true, offsetY: true }"
                   filled
                   dense
                   color="#6389d1"
-                ></v-text-field>
+                ></v-combobox>
               </v-col>
               <v-col cols="12" md="2"></v-col>
             </v-row>
@@ -80,6 +82,7 @@
 
 
   export default {
+    name: 'Save-view',
     components: {
     HeaderView,
     FooterView,
@@ -90,8 +93,10 @@
       ID: '', // パラメーター「ID」格納変数
       Name: '', // パラメーター「Name」格納変数
       Area: '', // パラメーター「Area」格納変数
-      Category: '', // パラメーター「Category」格納変数
-      dataList: [] // データ表示用配列
+      Category: '',
+      dataList: [], // データ表示用配列
+      categories: ['カフェ', 'ランチ', 'ディナー', 'パン', 'レストラン', 'ビストロ', 'バー', '居酒屋', '食堂', 'その他']
+
     };
   },
   methods: {
