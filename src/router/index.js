@@ -5,6 +5,7 @@ import SaveView from '../views/SaveView.vue';
 import SearchView from '../views/SearchView.vue';
 import SaveResults from '../views/SaveResults.vue';
 import SearchResults from '../views/SearchResults.vue'; // 正しいファイル名でインポート
+//import ShopDetail from '../views/ShopDetail.vue';
 
 Vue.use(Router);
 
@@ -39,6 +40,12 @@ export default new Router({
       name: 'search-results',
       component: SearchResults, // インポートしたSearchResultsをルートに設定
       props: true
-    }
-  ]
+    },
+/*     {
+      path: '/shop-detail/:id',
+      name: 'shop-detail',
+      component: ShopDetail,
+      props: true
+    },
+ */  ]
 });

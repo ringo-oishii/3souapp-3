@@ -43,9 +43,8 @@ export default {
         Area: '', //パラメーター「Area」格納変数
         Category: '', //パラメーター「Category」格納変数
         dataList: [], // データ表示用配列
-    };
+      };
   },
-
 
   methods: {
   async readData() {
@@ -183,5 +182,4 @@ footer {
 }
 
 </style>
-
 

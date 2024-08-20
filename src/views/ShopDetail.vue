@@ -1,23 +1,32 @@
 <template>
-    <div>
-      <h1>{{ shop.name }}</h1>
-      <p>ここにお店の詳細情報を表示します。</p>
-      <router-link to="/">戻る</router-link>
-    </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        shop: null
-      };
-    },
-    created() {
-      const shopId = this.$route.params.id;
-      const shop = this.$root.$data.shops.find(s => s.id === parseInt(shopId));
-      this.shop = shop || { name: 'お店が見つかりませんでした' };
+  <div>
+    <h1>Shop Details</h1>
+    <p>ID: {{ item.ID }}</p>
+    <p>Name: {{ item.Name }}</p>
+    <p>Area: {{ item.Area }}</p>
+    <p>Category: {{ item.Category }}</p>
+    <!-- 詳細情報の表示 -->
+  </div>
+</template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      item: {}
+    };
+  },
+
+  async created() {
+    const id = this.$route.params.id;
+    try {
+      const response = await axios.get(`https://m3h-ikari-functionapp729.azurewebsites.net/api/DETAIL/${id}`);
+      this.item = response.data;
+    } catch (error) {
+      console.error("詳細情報の取得に失敗しました", error);
     }
-  };
-  </script>
-  
+  },
+};
+</script>

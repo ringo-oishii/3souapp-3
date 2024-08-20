@@ -57,6 +57,7 @@
 <script>
 import HeaderView from '@/components/HeaderView.vue';
 import FooterView from '@/components/FooterView.vue';
+import axios from 'axios';
 
 export default {
   name: 'SearchView',
@@ -68,11 +69,36 @@ export default {
     return {
       selectedArea: '',
       selectedCategory: '',
-      areas: ['表参道', '渋谷', '自由が丘'], // エリアの例
-      categories: ['カフェ', 'ランチ', 'ディナー', 'パン'], // カテゴリーの例
+      areas: [], // 初期値を空の配列に
+      categories: [], // 初期値を空の配列
     };
   },
+
+  created() {
+    this.selectedAreas(); // コンポーネントが作成された時にエリアを取得
+    this.fetchCategories(); // コンポーネントが作成された時にカテゴリーを取得
+  },
   methods: {
+
+    selectedAreas() {
+      axios.get('https://m3h-ikari-functionapp729.azurewebsites.net/api/GetAreas')
+        .then(response => {
+          this.areas = response.data;
+        })
+        .catch(error => {
+          console.error('エリアの取得に失敗しました:', error);
+        });
+    },
+    fetchCategories() {
+      axios.get('https://m3h-ikari-functionapp729.azurewebsites.net/api/GetCategories')
+        .then(response => {
+          this.categories = response.data;
+        })
+        .catch(error => {
+          console.error('カテゴリーの取得に失敗しました:', error);
+        });
+    },
+
     performSearch() {
       // クエリパラメータとしてエリアとカテゴリーを設定し、SearchResultsビューへ移動
       this.$router.push({
