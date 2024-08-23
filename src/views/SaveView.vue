@@ -18,13 +18,22 @@
                 <h2 class="text-center"> 💖 Save your new favorite 💖 </h2>
 
                 <v-text-field
-                  label="🍴 お店の名前を入力…"
-                  :style="{ width: '400px' }"
-                  v-model="Name"
-                  filled
-                  dense
-                  color="#6389d1"
-                ></v-text-field>
+                      label="🆔 IDを入力…"
+                      :style="{ width: '400px' }"
+                      v-model="ID"
+                      filled
+                      dense
+                      color="#6389d1"
+                    ></v-text-field>
+
+                <v-text-field
+                      label="🍴 お店の名前を入力…"
+                      :style="{ width: '400px' }"
+                      v-model="Name"
+                      filled
+                      dense
+                      color="#6389d1"
+                    ></v-text-field>
 
                 <v-text-field
                   label="📍 エリアを入力…"
@@ -63,88 +72,81 @@
   </div>
 </template>
 
-<script>
+<script> 
 import axios from 'axios';
-import HeaderView from '@/components/HeaderView.vue';
-import FooterView from '@/components/FooterView.vue';
-
-export default {
-  name: 'Save-view',
-  components: {
-    HeaderView,
-    FooterView,
-  },
-
-  data() {
-    return {
-      ID: '', // パラメーター「ID」格納変数
-      Name: '', // パラメーター「Name」格納変数
-      Area: '', // パラメーター「Area」格納変数
-      Category: '',
-      dataList: [], // データ表示用配列
-      categories: ['カフェ', 'ランチ', 'ディナー', 'パン', 'レストラン', 'ビストロ', 'バー', '居酒屋', '食堂', 'その他']
-    };
-  },
-
-  created() {
-    // IDを自動生成して設定
-    this.ID = this.generateID();
-  },
-
-  methods: {
-    generateID() {
-      // ここでは単純なタイムスタンプを使用。必要に応じてUUIDなどに変更することも可能。
-      return Date.now().toString();
-    },
-
-    async addData() {
-      // IDの入力チェック（空白か数字以外なら終了）
-      if (!this.ID || isNaN(this.ID)) {
-        console.log("IDに数値が入力されていません");
-        return;
-      }
-
-      // 名前の入力チェック（空白なら終了）
+      import HeaderView from '@/components/HeaderView.vue';
+      import FooterView from '@/components/FooterView.vue';
+    
+    
+      export default {
+        name: 'Save-view',
+        components: {
+        HeaderView,
+        FooterView,
+        },
+    
+        data() {
+        return {
+          ID: '', // パラメーター「ID」格納変数
+          Name: '', // パラメーター「Name」格納変数
+          Area: '', // パラメーター「Area」格納変数
+          Category: '',
+          dataList: [], // データ表示用配列    
+        };
+      },   
+methods: {
+  async addData() {
+    // IDの入力チェック（空白か数字以外なら終了）
+    if (!this.ID || isNaN(this.ID)) {
+      alert("IDに数値が入力されていません");
+      return;
+    }
+    // 名前の入力チェック（空白なら終了）
     if (!this.Name) {
       alert("お店の名前を入力してください。");
       return;
     }
-      
-      // POSTメソッドで送るパラメーターを作成
-      const param = {
-        ID: this.ID,
-        Name: this.Name,
-        Area: this.Area,
-        Category: this.Category
-      };
-      
-      try {
-        // INSERT用のAPIを呼び出し
-        const response = await axios.post('https://m3h-ikari-functionapp729.azurewebsites.net/api/INSERT', param);
-        // 結果をコンソールに出力
-        console.log(response.data);
-
-        // 保存完了画面に遷移（パラメータをクエリとして渡す）
-        const currentPath = this.$route.path;
-        if (currentPath !== '/save-results') {
-          this.$router.push({ name: 'save-results' ,
-            query: {
-              ID: this.ID,
-              Name: this.Name,
-              Area: this.Area,
-              Category: this.Category
-            }
-          });
+    
+    // POSTメソッドで送るパラメーターを作成
+    const param = {
+      ID: this.ID,
+      Name: this.Name,
+      Area: this.Area,
+      Category: this.Category
+    };
+    
+    try {
+      // INSERT用のAPIを呼び出し
+      const response = await axios.post('https://m3h-ikari-functionapp729.azurewebsites.net/api/INSERT', param, {
+        headers: {
+          'Content-Type': 'application/json'
         }
-
-      } catch (error) {
-        console.error("データの追加に失敗しました", error);
+      });
+      // 結果をコンソールに出力
+      console.log('レスポンス:', response.data);
+      // 保存完了画面に遷移（パラメータをクエリとして渡す）
+      const currentPath = this.$route.path;
+      if (currentPath !== '/save-results') {
+        this.$router.push({ name: 'save-results',
+          query: {
+            ID: this.ID,
+            Name: this.Name,
+            Area: this.Area,
+            Category: this.Category
+          }
+        });
       }
+
+    } catch (error) {
+      console.error("データの追加に失敗しました", error.response || error.request || error.message);
     }
   }
-};
+}}
+
 </script>
 
+
+    
 <style>
 #app {
   font-family: 'Yomogi', 'Avenir', Helvetica, Arial, sans-serif;
@@ -177,3 +179,4 @@ export default {
   margin-top: 16px;
 }
 </style>
+

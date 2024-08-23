@@ -107,6 +107,11 @@
             console.log("IDに数値が入力されていません");
             return;
           }
+          // 名前の入力チェック（空白なら終了）
+          if (!this.Name) {
+            alert("お店の名前を入力してください。");
+            return;
+          }
           
           // POSTメソッドで送るパラメーターを作成
           const param = {
