@@ -2,17 +2,24 @@
   <div id="app" data-app="true">
     <HeaderView />
     <main>
-      <v-container fluid>
+      <section>
+        <v-container fluid>
         <!-- 検索フォーム -->
-        <v-row class="mb-3 mt-3" align="center" justify="center">
-          <v-col cols="12">
+          <v-row class="mb-3 mt-3" 
+          align="center" 
+          justify="center"
+          no-gutters
+          >
+          <v-col 
+            cols="12"
+            class="d-flex flex-column align-center"
+          >
             <div class="search-container">
               <h2 class="text-center">🔍 Search from favorite 🔍</h2>
-              <v-row class="mb-3 mt-3" align="center" justify="center">
-                <v-col cols="12" md="2"></v-col>
-                <v-col cols="12" md="4">
-                  <v-select
+
+              <v-select
                     label="📍 エリアを選択…"
+                    :style="{ width: '400px' }"
                     v-model="selectedArea"
                     :items="areas"
                     :menu-props="{ top: true, offsetY: true }"
@@ -21,10 +28,10 @@
                     dense
                     color="#6389d1"
                   ></v-select>
-                </v-col>
-                <v-col cols="12" md="4">
+
                   <v-select
                     label="🏷️ カテゴリーを選択…"
+                    :style="{ width: '400px' }"
                     v-model="selectedCategory"
                     :items="categories"
                     :menu-props="{ top: true, offsetY: true }"
@@ -33,22 +40,21 @@
                     dense
                     color="#6389d1"
                   ></v-select>
-                </v-col>
-                <v-col cols="12" md="2"></v-col>
-              </v-row>
-              <v-btn
-                class="ma-2"
+
+                  <v-btn
+                class="button-search ma-2"
                 color="#6389d1"
                 dark
                 large
                 @click="performSearch"
               >
                 Search
-              </v-btn>
-            </div>
-          </v-col>
-        </v-row>
-      </v-container>
+                </v-btn>
+              </div>
+            </v-col>
+          </v-row>
+        </v-container>
+      </section>
     </main>
     <FooterView />
   </div>
@@ -61,7 +67,7 @@ import axios from 'axios';
 import { toKana } from 'wanakana'; 
 
 export default {
-  name: 'SearchView',
+  name: 'Search-View',
   components: {
     HeaderView,
     FooterView,
@@ -118,7 +124,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 #app {
   font-family: 'Yomogi', 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -126,4 +132,28 @@ export default {
   text-align: center;
   color: #5d5d63;
 }
+
+.text-center {
+  margin-bottom: 50px;
+}
+
+.no-results {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.custom-select {
+  cursor: pointer;
+}
+
+.search-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button-search {
+  margin-top: 16px;
+}
+
 </style>

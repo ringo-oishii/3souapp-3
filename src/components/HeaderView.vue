@@ -62,12 +62,10 @@
     padding: 0 15px;
     height: 70px;
     width: 100%
-
   }
 
   .title {
     font-size: 20px;
-
   }
   
   nav a {

@@ -5,7 +5,9 @@
 
     <section>
       <div class="category-contents">
-      <h2>🎵😊 your favorite 😊🎵</h2>
+      <div class="home-container">
+      <h2 class="text-center">🎵😊 your favorite 😊🎵</h2>
+      </div>
       <ul class="favorite-list">
             <li v-for="(item, index) in dataList" :key="index" class="list-card">
               <div class="card-contents">
@@ -83,10 +85,20 @@ export default {
   text-align: center;
   color: #5d5d63;
 }
+
+.text-center {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
  
 main {
   padding: 0 80px;
-  margin-top: 50px;
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
  
 .favorite-list {

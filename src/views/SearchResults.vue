@@ -6,7 +6,18 @@
         <section>
           <div class="search-contents">
             <h2>⭐ Let's go ⭐</h2>
-            <ul class="favorite-list" justify="center">
+            <!-- ローディング中のメッセージを表示 -->
+            <div v-if="isLoading" class="loading">
+            <p>読み込み中です...</p>
+            </div>
+
+            <!-- API結果がない場合のメッセージを表示 -->
+            <div v-else-if="dataList.length === 0" class="no-results">
+              <p>該当する結果が見つかりませんでした。</p>
+            </div>
+            
+            <!-- 結果がある場合にリストを表示 -->
+            <ul v-else class="favorite-list" justify="center">
               <li v-for="(item, index) in dataList" :key="index" class="list-card">
                   <div class="card-contents">
                     <span class="card-id"> {{ item.ID }}</span>
@@ -40,6 +51,7 @@ export default {
       selectedArea: '',
       selectedCategory: '',
       dataList: [], // APIから取得したデータを格納する配列
+      isLoading: false  // ここでプロパティを定義する
     };
   },
   created() {
@@ -53,6 +65,7 @@ export default {
   },
   methods: {
     async fetchResults() {
+      this.isLoading = true;  // データ取得開始時にローディングを設定
       try {
         console.log("APIリクエストを開始します");
  
@@ -77,6 +90,8 @@ export default {
  
       } catch (error) {
         console.error("データの取得に失敗しました:", error);
+      }finally {
+        this.isLoading = false;  // データ取得終了後にローディングを解除
       }
     },
   },
